@@ -1,0 +1,50 @@
+{
+    "lib_names": ["X"],
+    "lib_genome_dir": "path/to/genome_files_dir",
+    "lib_genome_filenames": ["X.fasta"],
+    "lib_genome_gffs": ["X.gff"],
+    "minimap2_exec_path": "/path/to/minimap2-2.24_x64-linux/minimap2",
+    "vsearch_exec_path": "/path/to/vsearch",
+    "metagenome_bool": false,
+    "collapse_params": {
+        "min_perc_cov": 0.9, 
+        "min_perc_match": 0.9,
+        "min_BC_support_ratio": 3,
+        "max_frag_diff_to_len": 0.25
+    },
+    "primer_info": {
+        "oligo_db_fp": "path/to/oligos_blunt-end.fa",
+        "flanking_names": {
+            "BC_flanking": {"5": "5bc", 
+                            "3": "3bc"},
+            "insert_flanking": {"5": "5insert", 
+                                "3": "3insert"}
+        }
+    },
+    "step_1": {
+        "files_pre_split": false,
+        "usearch_exec_path": "/path/to/usearch",
+        "search_pcr2": {
+            "fwd": "GTTCTTATCTTTGCAGTCTC",
+            "rev": "GAGATTTACGCTTTGGTAAAAGTTGG",
+            "maxdiffs": 2,
+            "minamp": 300,
+            "maxamp": 15000
+        },
+        "search_oligodb": {
+            "maxdiffs": 1,
+            "minamp": 300,
+            "maxamp": 15000
+        },
+        "remove_non_concatenated_oligo_ops": false
+    },
+    "step_2": {
+        "oligo_id_cutoff": 90
+    },
+    "step_3": {
+        "max_expected_error": 10
+    },
+    "minimap_qual_min": 60,
+    "default_cfg_path":  "path/to/default_cfg.json"
+
+}

@@ -1,0 +1,52 @@
+{
+    "steps2dirs": {
+        "1": "01-us_ops",
+        "2": "02-pos_ins_bc",
+        "3": "03-vs_ffee",
+        "4": "04-minimap2",
+        "5": "05-BC_and_genes_dfs",
+        "6": "Plots" 
+    },
+    "fns": {
+        "1": {"trimmed": "_trimmed.fq",
+              "no_primer": "_noprimer.fq",
+              "no_insbc": "_no_insbc.fq",
+              "insbc": "_insbc.txt"},
+        "2": {"bcs_fasta": "_bc.fasta",
+              "bcs_tab": "_bc.tab",
+              "ins_fq": "_ins.fq",
+              "ins_tab": "_ins.tab",
+              "no_bc": "_no_bc.txt",
+              "no_ins": "_no_ins.txt",
+              "bad_BC_lens": "_bad_BC_lens.tsv"},
+        "3": {"inserts": "_insert.fasta"},
+        "4": {"minimap_op": ".paf"},
+        "5": {"bc2locs": "BC2locs.json",
+              "failed_bcs": "BCs_failed_mapping.json",
+              "redundant_bc": "BCs_multi_location.json",
+              "best_bc_pos": "BC2best_pos.tsv",
+              "bc_loc_df": "BC_gene_mapped.tsv",
+              "genes_count_df": "genes_count_df.tsv"
+        },
+        "P": {"uniq_ins_hist": "_uniq_ins_histo.pdf",
+              "uniq_ins_tbl": "_uniq_ins.tsv",
+              "nHits2LocFreq": "nHits2Loc2Freq.json",
+              "good_bc_hist": "_bc_loc_histo.pdf",
+              "gene_cov": "_gene_cov.pdf",
+              "cu_gene_cov": "_cumulative_gene_cov.pdf",
+              "frag_cov": "_fragment_cov.pdf",
+              "frag_len": "_fragment_len.pdf",
+              "contig_frag_map": "_map.pdf",
+              "contig_frag_cov": "_frag_cov_genome.pdf"
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
