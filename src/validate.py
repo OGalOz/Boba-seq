@@ -1,7 +1,7 @@
 import os, logging, json
 from typing import List, Dict
 from contig_collider import special_match_contig_names
-from import_gff import DubSeq_import_gff
+from import_gff import import_gff, import_gff_alt
 from get_bc_to_ins_file import get_read_to_seq_dict_from_fa
 
 
@@ -92,15 +92,21 @@ def mini_validate_matching_contig_names(lib_name, genome_fna_fp, gff_fp):
             )
         fna_contig_names.append(new_ctg)
 
-    gff_df = DubSeq_import_gff(gff_fp)
+    gff_df = import_gff(gff_fp)
+    if type(gff_df) == str: # if return is empty, gff is not using "gene" as feature types
+        gff_df = import_gff_alt(gff_fp)
+        print("Used import_gff_alt to import .gff, GFF uses CDS as features.")
+        
+    if type(gff_df) == str: # return is empty
+        print("import_gff failed, output is empty:", gff_df)
+
     gff_contig_names = list(gff_df["contig"].unique())
 
     if len(gff_contig_names) > len(fna_contig_names):
         raise Exception(
             "Number of contig names in GFF cannot be greater than"
             + " the number of contig names in the Genome FNA file. "
-            + "That would imply there are genes in contigs that "
-            + "don't exist."
+            + "Please check that your files came from the same assembly."
         )
 
     new_gff_contig_names = []

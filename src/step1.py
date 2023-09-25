@@ -97,7 +97,11 @@ def run_step_1_singlelib(op_lib_dir: str, lib_name: str, cfg_d: Dict, fq_fps: Li
         )
         concatenate_usearch_pcr2_results(usearch_op_dir, lib_name, cfg_d)
     else:
-        print("Single input fastq file, skipping concatenation step.")
+        print("Single input fastq file, skipping concatenation step. Removed '_1' from file names")
+        # remove "_1" from output files
+        for file in os.listdir(usearch_op_dir):
+            if file.startswith(lib_name + '_1'):
+                os.rename(os.path.join(usearch_op_dir, file), os.path.join(usearch_op_dir, file.replace(lib_name + '_1', lib_name)))
 
     # Get number of reads in output after concatenation
     ls_fp = os.listdir(usearch_op_dir)
@@ -106,9 +110,10 @@ def run_step_1_singlelib(op_lib_dir: str, lib_name: str, cfg_d: Dict, fq_fps: Li
         out_fp = os.path.join(usearch_op_dir, file)
         if any(x in file for x in ["fq", "fastq"]):
             num_reads = get_file_length(out_fp) / 4
+            log_list += [f"Reads in {out_fp}: " + str(num_reads)]
         else:
             num_reads = get_file_length(out_fp)
-        log_list += [f"Reads in {out_fp}: " + str(num_reads)]
+            log_list += [f"Lines in {out_fp}: " + str(num_reads)]
 
     with open(
         os.path.join(logs_dir, lib_name + "_step1_log.txt"),
@@ -128,7 +133,7 @@ def run_many_usearch_pcr2(files_to_process, f_basenames, cfg_d, usearch_op_dir) 
         f_basenames list(str)
     usearch -search_pcr2 $f\.fq -fwdprimer $fwd -revprimer $rev \
     -maxdiffs 2 -minamp 300 -maxamp 15000 -strand both \
-    -fastqout $f\_trimmed1.fq -notmatchedfq discarded_reads/$f\_noprimer.fq
+    -fastqout $f\_trimmed.fq -notmatchedfq discarded_reads/$f\_noprimer.fq
 
     Description:
         usearch -search_pcr2, https://www.drive5.com/usearch/manual/cmd_search_pcr2.html.
@@ -151,7 +156,7 @@ def run_many_usearch_pcr2(files_to_process, f_basenames, cfg_d, usearch_op_dir) 
     usearch_exec_path = s1["usearch_exec_path"]
     arg_d = s1["search_pcr2"]
     usearch_pcr2_results = {}
-
+    
     for i in range(len(files_to_process)):
         fq_fp = files_to_process[i]
         print(
@@ -235,7 +240,7 @@ def run_usearch_search_pcr2_command(
     ]
     # The output from the file is stored in res.stdout
     res = subprocess.run(command_args, capture_output=True)
-    log_list: List[str] = ["stdout: " + res.stdout.decode("utf-8"),
+    log_list = ["stdout: " + res.stdout.decode("utf-8"),
             "stderr: " + res.stderr.decode("utf-8")
             ]
     ret_d = {"fq_out": fq_out}

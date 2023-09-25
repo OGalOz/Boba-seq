@@ -1,12 +1,13 @@
 """
 In step 5, we combine barcodes to .paf output from minimap2 
     (insert hits against a reference genome).
-    A series of filters are then applied to identify the best 
-    position(s) for each barcode.
+    A series of filters are then applied to identify the best position(s) 
+    for each barcode.
     Redundant barcodes in empty vectors can result in multiple inserts
-    per barcodes, so barcodes that map to multiple locations are kept.
-    This is then used to map insert fragments to genes based on
-    coverage of complete ORFs.
+    per barcodes, so barcodes that map to multiple locations are kept with
+    multi_frag set to True (these are excluded from fitness analysis).
+    This is then used to map insert fragments to genes based on coverage
+    of complete ORFs.
     
 Many key functions are in:
     collapse_bcs.py
@@ -21,7 +22,7 @@ from collections import defaultdict, Counter
 from typing import Dict, List, TypeVar, Tuple
 from parse_paf import parse_paf_file, get_read_name_to_info_dict
 from collapse_bcs import bc_df_collapse_steps, export_collapsed_bc_files
-from import_gff import DubSeq_import_gff
+from import_gff import import_gff, import_gff_alt
 from validate import load_entire_cfg, verify_cfg_d, validate_collapse_params
 import contig_collider
 
@@ -124,9 +125,16 @@ def run_step_5_singlelib(
 
     # Imports genome annotation files
     gff_fp: str = get_gff_fp(cfg_d, lib_name)
-    # Note that gff_df is already sorted
-    gff_df: pd.DataFrame = DubSeq_import_gff(gff_fp)
-
+    # Note that gff_df is already sorted ## YH: sorted by contig, then pos_from
+    gff_df: pd.DataFrame = import_gff(gff_fp)
+        
+    if type(gff_df) == str: # returned error message
+        gff_df = import_gff_alt(gff_fp)
+        print("Used import_gff_alt to import .gff, unconventional GFF features.")
+        
+    if type(gff_df) == str: # returned error message
+        print(gff_df)
+        
     # Here we check that contig names match within best_mappings_df and gff_df
     gff_df, bc_df = contig_collider.match_contig_names(
         gff_df, best_mappings_df, debug=True
@@ -216,9 +224,16 @@ def midway_run1(
 
     # Imports genome annotation files
     gff_fp: str = get_gff_fp(cfg_d, lib_name)
-    # Note that gff_df is already sorted
-    gff_df: pd.DataFrame = DubSeq_import_gff(gff_fp)
-
+    # Note that gff_df is already sorted ## YH: sorted by contig, then pos_from
+    gff_df: pd.DataFrame = import_gff(gff_fp)
+        
+    if type(gff_df) == str: # returned error message
+        gff_df = import_gff_alt(gff_fp)
+        print("Used import_gff_alt to import .gff, unconventional GFF features.")
+        
+    if type(gff_df) == str: # returned error message
+        print(gff_df)
+    
     # Here we check that contig names match within best_mappings_df and gff_df
     gff_df, bc_df = contig_collider.match_contig_names(
         gff_df, best_mappings_df, debug=True

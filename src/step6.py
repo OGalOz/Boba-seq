@@ -70,7 +70,7 @@ def run_step_6_singlelib(
         bc_multi_dict = json.load(f)
     ls_bc_multi = bc_multi_dict["bc_w_multi_mappings"]
     bc_mapped_noMulti_df = bc_mapped_df[~bc_mapped_df["bc"].isin(ls_bc_multi)]
-    print(bc_mapped_noMulti_df.head(5))
+#     print(bc_mapped_noMulti_df.head(5))
 
     genes_df = pd.read_table(genes_df_fp)
     nGenes = genes_df.shape[0]
@@ -465,7 +465,7 @@ def create_limited_contig_fragment_plot(
         per_run (int): Unimportant integer which defines how often we report
                         the number of fragments plotted thus far.
     """
-    print(contig_df.columns)
+#     print(contig_df.columns)
     if fragment_end == float("inf"):
         fragment_end = contig_df.shape[0]
     if contig_end == float("inf"):

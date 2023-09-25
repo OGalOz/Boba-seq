@@ -241,6 +241,8 @@ def filter_single_lib(
         tot_reads = oligo_df["query"].nunique()
 
         # reads with multiple hits to one oligo, concatenated amplicons
+        ## YH: new, collapse exact same kit b/c step1 can spilt each read into multiple reads
+        oligo_df = oligo_df.drop_duplicates(subset=["query", "qlo", "qhi"], keep="first")
         concat_reads_df = oligo_df[oligo_df["query"].duplicated(keep="first")]
         uniq_concat_reads = concat_reads_df["query"].unique()
         nUniq_concat_reads = len(uniq_concat_reads)
@@ -273,7 +275,7 @@ def filter_single_lib(
     lib_df = lib_df[~lib_df["query"].isin(ls_remove)]
 
     # extract common reads from all oligo tables: reads with single hits to all 4 oligos
-    # Note: i goes from 1 -> 3 (inclusive), so it intersects the reads
+    # Note: i goes fromIt hink 1 -> 3 (inclusive), so it intersects the reads
     # from all oligo subsets.
     reads_common = set(unique_reads_list[0])
     for i in range(1, len(unique_reads_list)):  # 1,2,3
