@@ -3,8 +3,8 @@
     "lib_genome_dir": "path/to/genome_files_dir",
     "lib_genome_filenames": ["X.fasta"],
     "lib_genome_gffs": ["X.gff"],
-    "minimap2_exec_path": "/path/to/minimap2-2.24_x64-linux/minimap2",
-    "vsearch_exec_path": "/path/to/vsearch",
+    "minimap2_exec_path": "/usr/local/bin/minimap2",
+    "vsearch_exec_path": "/usr/local/bin/vsearch",
     "metagenome_bool": false,
     "collapse_params": {
         "min_perc_cov": 0.9, 
@@ -23,7 +23,7 @@
     },
     "step_1": {
         "files_pre_split": false,
-        "usearch_exec_path": "/path/to/usearch",
+        "usearch_exec_path": "/usr/local/bin/usearch",
         "search_pcr2": {
             "fwd": "GTTCTTATCTTTGCAGTCTC",
             "rev": "GAGATTTACGCTTTGGTAAAAGTTGG",

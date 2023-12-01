@@ -10,8 +10,11 @@ It was designed to map barcoded expression libraries.
 This program runs on Linux using python3 and uses three programs within it: usearch, vsearch, and minimap2.
 You can download them at the following links:
 usearch: https://www.drive5.com/usearch/download.html
+    version usearch32 v8.1.1861_i86linux32
 vsearch: https://github.com/torognes/vsearch
+    version vsearch v2.26.1_linux_x86_64
 minimap2: https://github.com/lh3/minimap2
+    version 2.26-r1175
 
 ## Dependencies
 Run 
@@ -235,4 +238,11 @@ To run the Genome Viewer:
     # It might be worthwhile to separate the genes_count_df files by contig, and that way
     # when you run show_next_gene, it sticks to a certain contig, otherwise it may shuffle
     # between contigs.
+```
+
+## Running Docker
+```/bin/sh
+docker build -t my-bobaseq .
+# Entering container
+docker run -it --rm --name bobaseq_container my-bobaseq /bin/bash
 ```
