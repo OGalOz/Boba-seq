@@ -45,6 +45,6 @@
         "max_expected_error": 10
     },
     "minimap_qual_min": 60,
-    "default_cfg_path":  "path/to/default_cfg.json"
+    "default_cfg_path":  "tests/json/default_cfg.json"
 
 }

@@ -1,7 +1,7 @@
 """
-Basic testing file 
-
-Write tests for all imported functions from stepX files.
+Unit testing file - 
+    The class TestStringMethods contains the methods which will run
+    as unit tests. They start with "test_".
 
 """
 
@@ -45,7 +45,6 @@ class TestStringMethods(unittest.TestCase):
     
     def test_reshape_dataframe(self, bc_df_fp: Optional[str] = None):
         # Set bc_df_fp here:
-
         if bc_df_fp is None:
             raise Exception("bc_df_fp should be set above...")
         bc_df: pd.DataFrame = pd.read_table(bc_df_fp, sep=",")
@@ -234,13 +233,6 @@ def spcr2_check_seq(seq: str, fwd: str, rev: str) -> Optional[Tuple[int, int]]:
         return None
     else:
         return (x, y)
-
-
-def main():
-    args = sys.argv
-    inp_fq = args[-2]
-    op_json_fp = args[-1]
-    search_pcr2_util(inp_fq, op_json_fp, cfg_d)
 
 
 def test_split_by_range_bins():

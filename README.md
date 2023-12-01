@@ -2,7 +2,7 @@
 
 
 ## Overview
-The code in this repository is used to map barcodes to insert sequences and then
+The code in this repository is used to map barcodes to "insert sequences" and then
 to their genomic location (if a reference assembly is provided). 
 It was designed to map barcoded expression libraries.
 
@@ -13,7 +13,12 @@ usearch: https://www.drive5.com/usearch/download.html
 vsearch: https://github.com/torognes/vsearch
 minimap2: https://github.com/lh3/minimap2
 
-* It also requires you to have pandas and matplotlib installed for your python3
+## Dependencies
+Run 
+```
+pip install -r requirements.txt
+```
+To install all python dependencies
 
 
 ## Input Files:
@@ -146,9 +151,9 @@ The program normally runs from step 1 through step 6
 
 
 
+# Test
 
-
-'''python3 src/run_steps.py quik_test.cfg sample_data/small_test tmp_small 1'''
+'''python3 src/run_steps.py tests/json/quik_test.json tests/sample_data/small_test tmp_small 1'''
 
 
 1. Place all FASTQ library files (inputs) in their own directory 
