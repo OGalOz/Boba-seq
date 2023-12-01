@@ -9,7 +9,7 @@ In step 5, we combine barcodes to .paf output from minimap2
     This is then used to map insert fragments to genes based on coverage
     of complete ORFs.
     
-Many key functions are in:
+Many key functionalities are in:
     collapse_bcs.py
 """
 
@@ -19,16 +19,12 @@ import pandas as pd
 import datetime
 import json
 from collections import defaultdict, Counter
-from typing import Dict, List, TypeVar, Tuple
+from typing import Dict, List, Tuple, Any
 from parse_paf import parse_paf_file, get_read_name_to_info_dict
 from collapse_bcs import bc_df_collapse_steps, export_collapsed_bc_files
 from import_gff import import_gff, import_gff_alt
 from validate import load_entire_cfg, verify_cfg_d, validate_collapse_params
 import contig_collider
-
-
-# Variable type - just for documentation purposes
-T = TypeVar("T")
 
 
 def run_step_5_singlelib(
@@ -524,7 +520,7 @@ def combine_barcodes_with_other_data(
     # tlen, tstart, tend, matches, aln_len, qual, perc_match_cov, perc_match
 
     print("Beginning to combine barcodes with .paf data.")
-    op_l: List[List[T]] = []
+    op_l: List[List[Any]] = []
     # Each tuple is (read_name, barcode)
     missing_barcode_reads: List[Tuple[str, str]] = []
     read_names = list(read2bc.keys())

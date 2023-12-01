@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import sys
 import contig_collider
+from typing import Dict
 
 class GenomeViewerNoConditions:
     def __init__(
