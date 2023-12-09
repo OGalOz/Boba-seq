@@ -3,8 +3,8 @@
     "lib_genome_dir": "path/to/genome_files_dir",
     "lib_genome_filenames": ["X.fasta"],
     "lib_genome_gffs": ["X.gff"],
-    "minimap2_exec_path": "/path/to/minimap2-2.24_x64-linux/minimap2",
-    "vsearch_exec_path": "/path/to/vsearch",
+    "minimap2_exec_path": "/usr/local/bin/minimap2",
+    "vsearch_exec_path": "/usr/local/bin/vsearch",
     "metagenome_bool": false,
     "collapse_params": {
         "min_perc_cov": 0.9, 
@@ -13,7 +13,7 @@
         "max_frag_diff_to_len": 0.25
     },
     "primer_info": {
-        "oligo_db_fp": "path/to/oligos_blunt-end.fa",
+        "oligo_db_fp": "tests/sample_data/small_test/sample_oligos_bluntend.fa",
         "flanking_names": {
             "BC_flanking": {"5": "5bc", 
                             "3": "3bc"},
@@ -23,7 +23,7 @@
     },
     "step_1": {
         "files_pre_split": false,
-        "usearch_exec_path": "/path/to/usearch",
+        "usearch_exec_path": "/usr/local/bin/usearch32",
         "search_pcr2": {
             "fwd": "GTTCTTATCTTTGCAGTCTC",
             "rev": "GAGATTTACGCTTTGGTAAAAGTTGG",
@@ -45,6 +45,5 @@
         "max_expected_error": 10
     },
     "minimap_qual_min": 60,
-    "default_cfg_path":  "path/to/default_cfg.json"
-
+    "default_cfg_path":  "tests/json/default_cfg.json"
 }

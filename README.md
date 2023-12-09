@@ -2,7 +2,7 @@
 
 
 ## Overview
-The code in this repository is used to map barcodes to insert sequences and then
+The code in this repository is used to map barcodes to "insert sequences" and then
 to their genomic location (if a reference assembly is provided). 
 It was designed to map barcoded expression libraries.
 
@@ -10,10 +10,18 @@ It was designed to map barcoded expression libraries.
 This program runs on Linux using python3 and uses three programs within it: usearch, vsearch, and minimap2.
 You can download them at the following links:
 usearch: https://www.drive5.com/usearch/download.html
+    version usearch32 v8.1.1861_i86linux32
 vsearch: https://github.com/torognes/vsearch
+    version vsearch v2.26.1_linux_x86_64
 minimap2: https://github.com/lh3/minimap2
+    version 2.26-r1175
 
-* It also requires you to have pandas and matplotlib installed for your python3
+## Dependencies
+Run 
+```
+pip install -r requirements.txt
+```
+To install all python dependencies
 
 
 ## Input Files:
@@ -146,9 +154,9 @@ The program normally runs from step 1 through step 6
 
 
 
+# Test
 
-
-'''python3 src/run_steps.py quik_test.cfg sample_data/small_test tmp_small 1'''
+'''python3 src/run_steps.py tests/json/quik_test.json tests/sample_data/small_test tmp_small 1'''
 
 
 1. Place all FASTQ library files (inputs) in their own directory 
@@ -230,4 +238,21 @@ To run the Genome Viewer:
     # It might be worthwhile to separate the genes_count_df files by contig, and that way
     # when you run show_next_gene, it sticks to a certain contig, otherwise it may shuffle
     # between contigs.
+```
+
+## Running Docker
+```/bin/sh
+docker build -t my-bobaseq .
+```
+Once you've built it, you should be able to see it in Docker Desktop.
+At this point you no longer need to build it.
+You can enter the container with the following command
+```
+# Entering container
+docker run -it my-bobaseq
+```
+Now you should be in a shell inside the Docker container
+To run the program, use
+```
+python3 src/run_steps.py tests/json/quik_test.json tests/sample_data/small_test test_op 1
 ```

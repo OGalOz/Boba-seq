@@ -1,7 +1,7 @@
 """
-Basic testing file 
-
-Write tests for all imported functions from stepX files.
+Unit testing file - 
+    The class TestStringMethods contains the methods which will run
+    as unit tests. They start with "test_".
 
 """
 
@@ -19,7 +19,7 @@ from step1 import (
     run_usearch_search_oligodb_command,
     concat_files_to_output,
     extract_file_name,
-        )
+)
 
 from step5 import (
     gene_fragment_overlap,
@@ -39,34 +39,31 @@ from collapse_bcs import (
 )
 
 
-
-
 class TestStringMethods(unittest.TestCase):
-    
     def test_reshape_dataframe(self, bc_df_fp: Optional[str] = None):
         # Set bc_df_fp here:
-
         if bc_df_fp is None:
             raise Exception("bc_df_fp should be set above...")
         bc_df: pd.DataFrame = pd.read_table(bc_df_fp, sep=",")
         post_reshape_bc_df = reshape_dataframe(bc_df)
         self.assertTrue(True)
-    
-    
-    def test_gene_fragment_overlap(self, inp_genes_df_fp: Optional[str] = None, inp_bc_df_fp: Optional[str] = None):
+
+    def test_gene_fragment_overlap(
+        self, inp_genes_df_fp: Optional[str] = None, inp_bc_df_fp: Optional[str] = None
+    ):
         """
         inp_genes_df needs cols:
             "pos_from"
             "pos_to"
             "contig"
             "strand"
-    
+
         inp_bc_df_fp needs cols:
             "tstart"
             "tend"
             "contig"
             "strand"
-    
+
         """
         # inp_genes_df_fp = ""
         # inp_bc_df_fp = ""
@@ -77,10 +74,10 @@ class TestStringMethods(unittest.TestCase):
         bc_df = pd.read_table(inp_bc_df_fp)
         gene_fragment_overlap(genes_df, bc_df, dbg=True)
         self.assertTrue(True)
-    
 
-
-    def test_search_pcr2(self, inp_fq: Optional[str] = None, op_json_fp: Optional[str] = None) -> None:
+    def test_search_pcr2(
+        self, inp_fq: Optional[str] = None, op_json_fp: Optional[str] = None
+    ) -> None:
         """
         # Writes a JSON file in loc indicated
         # cfg_d must have ( for example ):
@@ -94,7 +91,6 @@ class TestStringMethods(unittest.TestCase):
 
         # Set op_json_fp here:
 
-
         cfg_d = {
             "fwd": "GTTCTTATCTTTGCAGTCTC",
             "rev": "GAGATTTACGCTTTGGTAAAAGTTGG",
@@ -102,7 +98,7 @@ class TestStringMethods(unittest.TestCase):
             "minamp": 300,
             "maxamp": 15000,
         }
-    
+
         fwd = cfg_d["fwd"]
         rev = cfg_d["rev"]
         maxdiffs = cfg_d["maxdiffs"]
@@ -125,7 +121,7 @@ class TestStringMethods(unittest.TestCase):
                 sep = f.readline()
                 qual = f.readline()
                 seq_num += 1
-    
+
                 if seq_num % 5000 == 0:
                     print(
                         "seq n",
@@ -136,16 +132,16 @@ class TestStringMethods(unittest.TestCase):
                         tuple_list[-10:],
                     )
                 rn = f.readline()
-    
+
         op_d = {"total": len(tuple_list), "tup_list": tuple_list}
         if op_json_fp is not None:
             with open(op_json_fp, "w") as g:
                 g.write(json.dumps(op_d))
             print("wrote output to " + op_json_fp)
         self.assertTrue(True)
-    
 
-# Function which creates a sample barcodes dataframe. 
+
+# Function which creates a sample barcodes dataframe.
 def generate_bc_df(
     op_fp: Optional[str] = None,
     start_range: int = 0,
@@ -184,7 +180,7 @@ def generate_bc_df(
         print("output dataframe", op_df)
 
 
-# Function which creates a sample genes dataframe. 
+# Function which creates a sample genes dataframe.
 def generate_genes_df(
     op_fp: str,
     start_range: int = 0,
@@ -223,10 +219,9 @@ def generate_genes_df(
     op_df = pd.DataFrame.from_dict(d)
     op_df.to_csv(op_fp, index=False, sep="\t")
     print("Wrote out sample genes df to " + op_fp)
-    
-    
-    
-# Util test function to check sequence for substrings.    
+
+
+# Util test function to check sequence for substrings.
 def spcr2_check_seq(seq: str, fwd: str, rev: str) -> Optional[Tuple[int, int]]:
     x = seq.find(fwd)
     y = seq.find(rev)
@@ -236,15 +231,7 @@ def spcr2_check_seq(seq: str, fwd: str, rev: str) -> Optional[Tuple[int, int]]:
         return (x, y)
 
 
-def main():
-    args = sys.argv
-    inp_fq = args[-2]
-    op_json_fp = args[-1]
-    search_pcr2_util(inp_fq, op_json_fp, cfg_d)
-
-
 def test_split_by_range_bins():
-
     test_case = {
         (12, 20, "contigA"): 5,
         (12, 19, "contigA"): 2,
@@ -280,4 +267,3 @@ python -m unittest -v test_module
 """
 if __name__ == "__main__":
     unittest.main()
-

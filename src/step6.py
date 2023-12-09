@@ -70,7 +70,7 @@ def run_step_6_singlelib(
         bc_multi_dict = json.load(f)
     ls_bc_multi = bc_multi_dict["bc_w_multi_mappings"]
     bc_mapped_noMulti_df = bc_mapped_df[~bc_mapped_df["bc"].isin(ls_bc_multi)]
-#     print(bc_mapped_noMulti_df.head(5))
+    #     print(bc_mapped_noMulti_df.head(5))
 
     genes_df = pd.read_table(genes_df_fp)
     nGenes = genes_df.shape[0]
@@ -84,7 +84,7 @@ def run_step_6_singlelib(
     cumulative_gene_coverage_plot(genes_df, plots_dir, cfg_d, lib_name)
 
     # These contigs come from genome.fna file
-    genome_contig2len: Dict[str,int] = get_contig_to_len(cfg_d, lib_name)
+    genome_contig2len: Dict[str, int] = get_contig_to_len(cfg_d, lib_name)
     # These contigs come from 'gff'
     contigs: List[str] = list(bc_mapped_noMulti_df["contig"].unique())
     contig2len = reconcile_contig2len(genome_contig2len, contigs)
@@ -196,7 +196,7 @@ def get_frag_cov_per_window(
         print("Binning contig ", ctg)
         contig_len = contig2len[ctg]
 
-        if contig_len == 10**6 or contig_len < 6*(10**4):
+        if contig_len == 10**6 or contig_len < 6 * (10**4):
             continue
         nFullWindows = contig_len // window_size
         last_window = contig_len % window_size
@@ -465,7 +465,7 @@ def create_limited_contig_fragment_plot(
         per_run (int): Unimportant integer which defines how often we report
                         the number of fragments plotted thus far.
     """
-#     print(contig_df.columns)
+    #     print(contig_df.columns)
     if fragment_end == float("inf"):
         fragment_end = contig_df.shape[0]
     if contig_end == float("inf"):
@@ -528,7 +528,9 @@ def create_limited_contig_fragment_plot(
     plt.clf()
 
 
-def reconcile_contig2len(contig2len: Dict[str, int], contigs: List[str]) -> Dict[str, int]:
+def reconcile_contig2len(
+    contig2len: Dict[str, int], contigs: List[str]
+) -> Dict[str, int]:
     # This function exists because there may be separate contig names
     # like X.1 vs X
     origs = sorted(list(contig2len.keys()))
@@ -540,7 +542,7 @@ def reconcile_contig2len(contig2len: Dict[str, int], contigs: List[str]) -> Dict
         )
 
     # This dict matches original contig name to possible new contig name with suffix
-    match_d: Dict[str,str] = special_match_contig_names(origs, contigs)
+    match_d: Dict[str, str] = special_match_contig_names(origs, contigs)
 
     new_ctg2_orig = {}
     for i in range(len(origs)):

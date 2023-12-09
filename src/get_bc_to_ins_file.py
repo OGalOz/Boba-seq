@@ -23,7 +23,6 @@ import json
 
 
 def get_bc_to_ins_file(bc_seq_fa, ins_fq_fp, op_dir):
-
     bc2read = get_bc_to_read_dict(bc_seq_fa)
     read2seq = get_read_to_seq_dict_from_fq(ins_fq_fp)
     # output_tmp_dicts((op_dir, bc2read, read2seq)

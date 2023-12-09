@@ -9,7 +9,7 @@ In step 5, we combine barcodes to .paf output from minimap2
     This is then used to map insert fragments to genes based on coverage
     of complete ORFs.
     
-Many key functions are in:
+Many key functionalities are in:
     collapse_bcs.py
 """
 
@@ -19,16 +19,12 @@ import pandas as pd
 import datetime
 import json
 from collections import defaultdict, Counter
-from typing import Dict, List, TypeVar, Tuple
+from typing import Dict, List, Tuple, Any
 from parse_paf import parse_paf_file, get_read_name_to_info_dict
 from collapse_bcs import bc_df_collapse_steps, export_collapsed_bc_files
 from import_gff import import_gff, import_gff_alt
 from validate import load_entire_cfg, verify_cfg_d, validate_collapse_params
 import contig_collider
-
-
-# Variable type - just for documentation purposes
-T = TypeVar("T")
 
 
 def run_step_5_singlelib(
@@ -127,14 +123,14 @@ def run_step_5_singlelib(
     gff_fp: str = get_gff_fp(cfg_d, lib_name)
     # Note that gff_df is already sorted ## YH: sorted by contig, then pos_from
     gff_df: pd.DataFrame = import_gff(gff_fp)
-        
-    if type(gff_df) == str: # returned error message
+
+    if type(gff_df) == str:  # returned error message
         gff_df = import_gff_alt(gff_fp)
         print("Used import_gff_alt to import .gff, unconventional GFF features.")
-        
-    if type(gff_df) == str: # returned error message
+
+    if type(gff_df) == str:  # returned error message
         print(gff_df)
-        
+
     # Here we check that contig names match within best_mappings_df and gff_df
     gff_df, bc_df = contig_collider.match_contig_names(
         gff_df, best_mappings_df, debug=True
@@ -173,7 +169,6 @@ def run_step_5_singlelib(
 def midway_run1(
     op_lib_dir, lib_name, comb_df_fp: str, cfg_d, bc_to_loc_dicts=None
 ) -> str:
-
     print("Starting step 5 midway")
     log_list: List[str] = []
     cp = validate_collapse_params(cfg_d)
@@ -226,14 +221,14 @@ def midway_run1(
     gff_fp: str = get_gff_fp(cfg_d, lib_name)
     # Note that gff_df is already sorted ## YH: sorted by contig, then pos_from
     gff_df: pd.DataFrame = import_gff(gff_fp)
-        
-    if type(gff_df) == str: # returned error message
+
+    if type(gff_df) == str:  # returned error message
         gff_df = import_gff_alt(gff_fp)
         print("Used import_gff_alt to import .gff, unconventional GFF features.")
-        
-    if type(gff_df) == str: # returned error message
+
+    if type(gff_df) == str:  # returned error message
         print(gff_df)
-    
+
     # Here we check that contig names match within best_mappings_df and gff_df
     gff_df, bc_df = contig_collider.match_contig_names(
         gff_df, best_mappings_df, debug=True
@@ -524,7 +519,7 @@ def combine_barcodes_with_other_data(
     # tlen, tstart, tend, matches, aln_len, qual, perc_match_cov, perc_match
 
     print("Beginning to combine barcodes with .paf data.")
-    op_l: List[List[T]] = []
+    op_l: List[List[Any]] = []
     # Each tuple is (read_name, barcode)
     missing_barcode_reads: List[Tuple[str, str]] = []
     read_names = list(read2bc.keys())

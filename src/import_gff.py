@@ -3,19 +3,20 @@ import pandas as pd
 
 # Modified from https://github.com/novichkov-lab/DubSeq
 
+
 def import_gff(gff_path) -> pd.DataFrame:
     # First read all features that has "Parent" property and hash them
-#     features, id2features = import_gff_parent(gff_path)
+    #     features, id2features = import_gff_parent(gff_path)
 
     # First read all features that has "Parent" property and hash them
     id2features = {}
-    features=[]
+    features = []
     with open(gff_path, "r") as f:
         for line in f:
             if line.startswith("##FASTA"):
                 break
             if line.startswith("#") or line.startswith("\n"):
-                continue                
+                continue
             vals = line.split("\t")
             # ignore all features that are not gene nor CDS
             if vals[2] != "CDS" and vals[2] != "gene":
@@ -46,8 +47,10 @@ def import_gff(gff_path) -> pd.DataFrame:
                     elif "pseudo=true" in dval:
                         f_pseudo = True
             else:
-                print("WARNING: check gff file, unexpected delimiter used for gene annotations.")
-            
+                print(
+                    "WARNING: check gff file, unexpected delimiter used for gene annotations."
+                )
+
             if f_parent:
                 features = id2features.get(f_parent)
                 if not features:
@@ -92,7 +95,9 @@ def import_gff(gff_path) -> pd.DataFrame:
                         elif key == "ID":
                             gene_id = value.strip()
                 else:
-                    print("WARNING: check gff file, unexpected delimiter used for gene annotations.")
+                    print(
+                        "WARNING: check gff file, unexpected delimiter used for gene annotations."
+                    )
 
                 if not gene_id:
                     continue
@@ -141,10 +146,10 @@ def import_gff(gff_path) -> pd.DataFrame:
                     }
                 )
 
-    if len(genes)==0:
+    if len(genes) == 0:
         return "import_gff failed to import GFF."
     else:
-        df_genes=pd.DataFrame(genes)[
+        df_genes = pd.DataFrame(genes)[
             [
                 "gene_type",
                 "gene_name",
@@ -157,13 +162,14 @@ def import_gff(gff_path) -> pd.DataFrame:
                 "product",
             ]
         ]
-        df_genes.sort_values(by=["contig","pos_from"], inplace=True)
+        df_genes.sort_values(by=["contig", "pos_from"], inplace=True)
         return df_genes
+
 
 def import_gff_alt(gff_path) -> pd.DataFrame:
     # First read all features that has "Parent" property and hash them
-#     features, id2features = import_gff_parent(gff_path)
-# for gff with CDS, no parent feature, and product is part of gene_description
+    #     features, id2features = import_gff_parent(gff_path)
+    # for gff with CDS, no parent feature, and product is part of gene_description
     # If GFF doesn't have "gene" features and uses "CDS" instead
     CDS = []
     with open(gff_path, "r") as f:
@@ -171,7 +177,7 @@ def import_gff_alt(gff_path) -> pd.DataFrame:
             if line.startswith("##FASTA"):
                 break
             if line.startswith("#") or line.startswith("\n"):
-                continue                
+                continue
             vals = line.split("\t")
             if vals[2] == "CDS":
                 f_contig = vals[0]
@@ -188,21 +194,23 @@ def import_gff_alt(gff_path) -> pd.DataFrame:
                 f_pseudo = False
                 if len(f_description.split(";")) > 1:
                     for dval in f_description.split(";"):
-                        if dval.startswith("Name="): # name of gene, ex. bla
+                        if dval.startswith("Name="):  # name of gene, ex. bla
                             f_name = dval[len("Name=") :].strip()
-                        elif dval.startswith("ID="): # also different
+                        elif dval.startswith("ID="):  # also different
                             f_locus_tag = dval[len("ID=") :].strip()
-                        elif dval.startswith("locus_tag="): # also different
+                        elif dval.startswith("locus_tag="):  # also different
                             f_locus_tag = dval[len("locus_tag=") :].strip()
                         elif dval.startswith("product="):
                             f_product = dval[len("product=") :].strip()
                         elif "pseudo=true" in dval:
                             f_pseudo = True
                 else:
-                    print("WARNING: check gff file, unexpected delimiter used for gene annotations.")
+                    print(
+                        "WARNING: check gff file, unexpected delimiter used for gene annotations."
+                    )
 
                     ### YH: add compilation of features here??###
-                    
+
                 CDS.append(
                     {
                         "gene_type": vals[2],
@@ -217,10 +225,10 @@ def import_gff_alt(gff_path) -> pd.DataFrame:
                     }
                 )
 
-    if len(CDS)==0:
+    if len(CDS) == 0:
         return "import_gff_alt failed to import GFF."
     else:
-        df_CDS=pd.DataFrame(CDS)[
+        df_CDS = pd.DataFrame(CDS)[
             [
                 "gene_type",
                 "gene_name",
@@ -233,8 +241,9 @@ def import_gff_alt(gff_path) -> pd.DataFrame:
                 "product",
             ]
         ]
-        df_CDS.sort_values(by=["contig","pos_from"], inplace=True)
+        df_CDS.sort_values(by=["contig", "pos_from"], inplace=True)
         return df_CDS
+
 
 if __name__ == "__main__":
     _, gff_fp = sys.argv

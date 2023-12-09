@@ -8,7 +8,6 @@ One central entry point is 'special_match_contig_names'.
 
 
 def match_contig_names(A_df, B_df, debug=False):
-
     a_ctgs: List[str] = sorted(list(A_df["contig"].unique()))
     b_ctgs: List[str] = sorted(list(B_df["contig"].unique()))
     a_ctgs_new, b_ctgs_new = collider(a_ctgs, b_ctgs, presorted=True)

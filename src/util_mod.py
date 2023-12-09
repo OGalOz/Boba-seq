@@ -3,6 +3,7 @@ import sys
 import shutil
 import logging
 import json
+import time
 from typing import List
 
 
@@ -44,7 +45,6 @@ def force_create_dir(op_dir):
 
 
 def prepare_for_steps(op_dir, step_num, lib, cfg_d=None):
-
     if step_num == 2:
         lib_dir = os.path.join(op_dir, lib)
         oligo_concat_dir = os.path.join(lib_dir, "us_ogdb", "concat")
@@ -82,7 +82,6 @@ def load_json(fp):
 def replace_all_instances_of_x_with_y_dir(
     dir_path: str, to_replace: str, to_insert: str, ignore_files: List[str], debug=True
 ) -> None:
-
     fs = os.listdir(dir_path)
     for x in ignore_files:
         fs.remove(x)

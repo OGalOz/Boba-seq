@@ -4,12 +4,13 @@ import numpy as np
 import pandas as pd
 import sys
 import contig_collider
+from typing import Dict
+
 
 class GenomeViewerNoConditions:
     def __init__(
         self, genes_count_df_fp, BC_loc_df_fp, show_plot=False, pdf_op_dir=None
     ):
-
         self.show_plot = show_plot
         self.pdf_op_dir = pdf_op_dir
         dtypes_d = {"gene_name": str, "locus_tag": str, "gene_type": str, "contig": str}
@@ -35,7 +36,6 @@ class GenomeViewerNoConditions:
         self.__cur_gene_color = "#FF0000"
         self.__gene_color = "#000000"
         self.__gene_score_color = "#FF0000"
-
 
     def split_by_contigs(self) -> None:
         """
@@ -156,7 +156,6 @@ class GenomeViewerNoConditions:
             raise RuntimeError(
                 f"No genes that match this description were found: {input_str}"
             )
-
 
         return genes
 
