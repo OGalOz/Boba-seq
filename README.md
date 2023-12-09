@@ -244,7 +244,9 @@ To run the Genome Viewer:
 ```/bin/sh
 docker build -t my-bobaseq .
 ```
-Once you've built it, you should be able to see it in Docker Desktop
+Once you've built it, you should be able to see it in Docker Desktop.
+At this point you no longer need to build it.
+You can enter the container with the following command
 ```
 # Entering container
 docker run -it my-bobaseq

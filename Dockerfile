@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -y \
     make \
     gcc \
     zlib1g-dev \
+    nano \
     curl \
     && rm -rf /var/lib/apt/lists/*
 

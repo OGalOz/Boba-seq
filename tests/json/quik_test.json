@@ -13,7 +13,7 @@
         "max_frag_diff_to_len": 0.25
     },
     "primer_info": {
-        "oligo_db_fp": "path/to/oligos_blunt-end.fa",
+        "oligo_db_fp": "tests/sample_data/small_test/sample_oligos_bluntend.fa",
         "flanking_names": {
             "BC_flanking": {"5": "5bc", 
                             "3": "3bc"},
@@ -46,5 +46,4 @@
     },
     "minimap_qual_min": 60,
     "default_cfg_path":  "tests/json/default_cfg.json"
-
 }
