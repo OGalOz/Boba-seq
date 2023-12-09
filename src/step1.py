@@ -38,7 +38,10 @@ import time
 from validate import verify_cfg_d
 from typing import List, Dict, Tuple
 
-def run_step_1_singlelib(op_lib_dir: str, lib_name: str, cfg_d: Dict, fq_fps: List[str]) -> None:
+
+def run_step_1_singlelib(
+    op_lib_dir: str, lib_name: str, cfg_d: Dict, fq_fps: List[str]
+) -> None:
     """
     Args:
         op_lib_dir is a directory main_output/lib_name
@@ -97,11 +100,18 @@ def run_step_1_singlelib(op_lib_dir: str, lib_name: str, cfg_d: Dict, fq_fps: Li
         )
         concatenate_usearch_pcr2_results(usearch_op_dir, lib_name, cfg_d)
     else:
-        print("Single input fastq file, skipping concatenation step. Removed '_1' from file names")
+        print(
+            "Single input fastq file, skipping concatenation step. Removed '_1' from file names"
+        )
         # remove "_1" from output files
         for file in os.listdir(usearch_op_dir):
-            if file.startswith(lib_name + '_1'):
-                os.rename(os.path.join(usearch_op_dir, file), os.path.join(usearch_op_dir, file.replace(lib_name + '_1', lib_name)))
+            if file.startswith(lib_name + "_1"):
+                os.rename(
+                    os.path.join(usearch_op_dir, file),
+                    os.path.join(
+                        usearch_op_dir, file.replace(lib_name + "_1", lib_name)
+                    ),
+                )
 
     # Get number of reads in output after concatenation
     ls_fp = os.listdir(usearch_op_dir)
@@ -126,7 +136,9 @@ def run_step_1_singlelib(op_lib_dir: str, lib_name: str, cfg_d: Dict, fq_fps: Li
     return None
 
 
-def run_many_usearch_pcr2(files_to_process, f_basenames, cfg_d, usearch_op_dir) -> Tuple[Dict, List[str]]:
+def run_many_usearch_pcr2(
+    files_to_process, f_basenames, cfg_d, usearch_op_dir
+) -> Tuple[Dict, List[str]]:
     """
     Args:
         files_to_process list(fp)
@@ -156,7 +168,7 @@ def run_many_usearch_pcr2(files_to_process, f_basenames, cfg_d, usearch_op_dir) 
     usearch_exec_path = s1["usearch_exec_path"]
     arg_d = s1["search_pcr2"]
     usearch_pcr2_results = {}
-    
+
     for i in range(len(files_to_process)):
         fq_fp = files_to_process[i]
         print(
@@ -240,9 +252,10 @@ def run_usearch_search_pcr2_command(
     ]
     # The output from the file is stored in res.stdout
     res = subprocess.run(command_args, capture_output=True)
-    log_list = ["stdout: " + res.stdout.decode("utf-8"),
-            "stderr: " + res.stderr.decode("utf-8")
-            ]
+    log_list = [
+        "stdout: " + res.stdout.decode("utf-8"),
+        "stderr: " + res.stderr.decode("utf-8"),
+    ]
     ret_d = {"fq_out": fq_out}
     return ret_d, log_list
 
@@ -354,14 +367,17 @@ def run_usearch_search_oligodb_command(
     print(res)
     print("Finished running usearch with the above commands.")
 
-    tmp_log_list: List[str] = ["stdout: " + res.stdout.decode("utf-8"),
-                "stderr: " + res.stderr.decode("utf-8")
-            ]
+    tmp_log_list: List[str] = [
+        "stdout: " + res.stdout.decode("utf-8"),
+        "stderr: " + res.stderr.decode("utf-8"),
+    ]
 
     return tmp_log_list
 
 
-def concatenate_usearch_pcr2_results(usearch_op_dir: str, lib, cfg_d, remove_old=True) -> str:
+def concatenate_usearch_pcr2_results(
+    usearch_op_dir: str, lib, cfg_d, remove_old=True
+) -> str:
     """
     Description:
         We combine multiple fastq files into a single fastq file

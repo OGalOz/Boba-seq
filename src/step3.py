@@ -165,7 +165,7 @@ def run_vsearch_dereplicate_command(vs_exc, inp_fp, op_fp) -> List[str]:
     print(res_str)
     print("Finished running vsearch with the above results.")
 
-    # We store the number n_unique in case we want it in the future - 
+    # We store the number n_unique in case we want it in the future -
     # it isn't currently in use.
     n_unique = get_important_nums(res_str, "derep")
 
@@ -174,7 +174,7 @@ def run_vsearch_dereplicate_command(vs_exc, inp_fp, op_fp) -> List[str]:
     return log_list
 
 
-def get_important_nums(inp: str, typ: str) -> Union[int, Tuple[int,int]]:
+def get_important_nums(inp: str, typ: str) -> Union[int, Tuple[int, int]]:
     # in this function we parse the standard error outputs of vsearch filter/derep
     # so typ is one of 'filter' or 'derep'
     # inp is standard error string
@@ -186,7 +186,7 @@ def get_important_nums(inp: str, typ: str) -> Union[int, Tuple[int,int]]:
     return res
 
 
-def get_imp2(inp: str, typ: str) -> Union[int, Tuple[int,int]]:
+def get_imp2(inp: str, typ: str) -> Union[int, Tuple[int, int]]:
     # in this function we parse the standard error outputs of vsearch filter/derep
     # so typ is one of 'filter' or 'derep'
     # inp is standard error string
@@ -215,7 +215,7 @@ def get_imp2(inp: str, typ: str) -> Union[int, Tuple[int,int]]:
         raise RuntimeError("Could not find line 'Sorting' in vsearch output.")
 
 
-def get_imp1(inp: str, typ: str) -> Union[int, Tuple[int,int]]:
+def get_imp1(inp: str, typ: str) -> Union[int, Tuple[int, int]]:
     # in this function we parse the standard error outputs of vsearch filter/derep
     # so typ is one of 'filter' or 'derep'
     # inp is standard error string

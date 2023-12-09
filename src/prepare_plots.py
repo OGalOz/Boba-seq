@@ -11,7 +11,6 @@ import shutil
 
 
 def create_plots_dir(lib_op_dir, force_create=True):
-
     plots_dir = os.path.join(lib_op_dir, "Plots")
     if os.path.exists(plots_dir):
         if force_create:
@@ -150,7 +149,10 @@ def create_count_dict(counts_list):
 
 def test_libuniq_hst(inp_fp, op_fp):
     logging.basicConfig(level=logging.DEBUG)
-    create_read_to_ins_histogram(inp_fp, op_fp, )
+    create_read_to_ins_histogram(
+        inp_fp,
+        op_fp,
+    )
 
 
 def main():

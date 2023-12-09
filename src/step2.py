@@ -52,7 +52,9 @@ from typing import List, Set, Tuple, Dict
 from collections import Counter
 
 
-def run_step_2_singlelib(op_lib_dir: str, lib_name: str, cfg_d: Dict, interactive=False) -> None:
+def run_step_2_singlelib(
+    op_lib_dir: str, lib_name: str, cfg_d: Dict, interactive=False
+) -> None:
     """
     Args:
         cfg_d (d): is the entire config_dict
@@ -242,7 +244,9 @@ def filter_single_lib(
 
         # reads with multiple hits to one oligo, concatenated amplicons
         ## YH: new, collapse exact same kit b/c step1 can spilt each read into multiple reads
-        oligo_df = oligo_df.drop_duplicates(subset=["query", "qlo", "qhi"], keep="first")
+        oligo_df = oligo_df.drop_duplicates(
+            subset=["query", "qlo", "qhi"], keep="first"
+        )
         concat_reads_df = oligo_df[oligo_df["query"].duplicated(keep="first")]
         uniq_concat_reads = concat_reads_df["query"].unique()
         nUniq_concat_reads = len(uniq_concat_reads)
@@ -298,7 +302,9 @@ def filter_single_lib(
     return lib_df, summary_d
 
 
-def extract_insert_BC_pos(data_filtered, lib, cfg_d, op_lib_dir) -> Tuple[str, int, Dict[int, int]]:
+def extract_insert_BC_pos(
+    data_filtered, lib, cfg_d, op_lib_dir
+) -> Tuple[str, int, Dict[int, int]]:
     """
     Args:
         cfg_d (dict): contains the following important info:
@@ -348,7 +354,9 @@ def extract_insert_BC_pos(data_filtered, lib, cfg_d, op_lib_dir) -> Tuple[str, i
     return pos_op_dir, nBadBarcode, bbCtr
 
 
-def fiveThreeRemoveAndMerge(lib, data_grouped, flank_d, pos_bc, pos_ins) -> Tuple[pd.DataFrame, pd.DataFrame, int, Dict[int,int], List[Tuple[int, int]] ]:
+def fiveThreeRemoveAndMerge(
+    lib, data_grouped, flank_d, pos_bc, pos_ins
+) -> Tuple[pd.DataFrame, pd.DataFrame, int, Dict[int, int], List[Tuple[int, int]]]:
     """
     Args:
         flank_d: Contains these keys:
@@ -428,7 +436,6 @@ def fiveThreeRemoveAndMerge(lib, data_grouped, flank_d, pos_bc, pos_ins) -> Tupl
 
 
 def writePosBCandPosInsertToFile(lib, pos_bc, pos_ins, pos_op_dir, cfg_d, bbL) -> None:
-
     bc_path = os.path.join(pos_op_dir, lib + cfg_d["d"]["fns"]["2"]["bcs_tab"])
     pos_bc.to_csv(bc_path, sep="\t", header=False, index=False)
     ins_path = os.path.join(pos_op_dir, lib + cfg_d["d"]["fns"]["2"]["ins_tab"])
@@ -490,7 +497,9 @@ def import_id_to_extract(in_file, op_lib_dir=".") -> Dict[str, Tuple[int, int]]:
     return extract_d
 
 
-def extract_by_pos(lib, input_file, bc_extract_d, ins_extract_d, op_lib_dir, cfg_d) -> Tuple[List[str], List[str]]:
+def extract_by_pos(
+    lib, input_file, bc_extract_d, ins_extract_d, op_lib_dir, cfg_d
+) -> Tuple[List[str], List[str]]:
     """
     Args:
         input_file: fastq of trimmed reads at lib + cfg_d["d"]["fns"]["1"]["trimmed"]
@@ -646,7 +655,9 @@ def extract_ins_seq(
     return ins_kept_count
 
 
-def report_and_write_discarded(lib, op_lib_dir, reads_dict, count, seq_type, cfg_d) -> List[str]:
+def report_and_write_discarded(
+    lib, op_lib_dir, reads_dict, count, seq_type, cfg_d
+) -> List[str]:
     """
     Note seq_type (string) is one of  'ins' or 'bc'
     """

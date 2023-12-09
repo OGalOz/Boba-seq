@@ -79,7 +79,6 @@ def validate_matching_contig_names(cfg_d):
 
 
 def mini_validate_matching_contig_names(lib_name, genome_fna_fp, gff_fp):
-
     contig2seq = get_read_to_seq_dict_from_fa(genome_fna_fp)
 
     fna_contig_names = []
@@ -93,11 +92,13 @@ def mini_validate_matching_contig_names(lib_name, genome_fna_fp, gff_fp):
         fna_contig_names.append(new_ctg)
 
     gff_df = import_gff(gff_fp)
-    if type(gff_df) == str: # if return is empty, gff is not using "gene" as feature types
+    if (
+        type(gff_df) == str
+    ):  # if return is empty, gff is not using "gene" as feature types
         gff_df = import_gff_alt(gff_fp)
         print("Used import_gff_alt to import .gff, GFF uses CDS as features.")
-        
-    if type(gff_df) == str: # return is empty
+
+    if type(gff_df) == str:  # return is empty
         print("import_gff failed, output is empty:", gff_df)
 
     gff_contig_names = list(gff_df["contig"].unique())
