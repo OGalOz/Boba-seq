@@ -672,24 +672,3 @@ def report_and_write_discarded(lib, op_lib_dir, reads_dict, count, seq_type, cfg
         print("Wrote reads that weren't kept to file " + crt_out_fp)
 
     return log_list
-
-
-def main():
-
-    help_str = "python3 src/step2.py cfg_json inp_dir op_dir(tmp) 1"
-    help_str = "OR\n"
-    help_str = "python3 src/step2.py inp_dir oligos_dir 2"
-    args = sys.argv
-    if args[-1] not in ["1", "2"]:
-        print(help_str)
-        sys.exit(1)
-    elif args[-1] == "1":
-        test(args)
-    else:
-        intermediate_tests(args, tp=3)
-
-    return None
-
-
-if __name__ == "__main__":
-    main()

@@ -515,24 +515,3 @@ def extract_file_name(full_path: str, already_split=False) -> str:
         split_file_name = split_file_name.rsplit("_", 1)[0]
 
     return split_file_name[0]
-
-
-def main():
-
-    help_str = "python3 src/step1.py cfg_json inp_dir op_dir(tmp) 1"
-    help_str = "OR\n"
-    help_str = "python3 src/step1.py inp_dir oligos_dir 2"
-    args = sys.argv
-    if args[-1] not in ["1", "2"]:
-        print(help_str)
-        sys.exit(1)
-    elif args[-1] == "1":
-        test(args)
-    else:
-        intermediate_tests(args, tp=3)
-
-    return None
-
-
-if __name__ == "__main__":
-    main()

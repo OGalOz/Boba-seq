@@ -29,7 +29,7 @@ def create_plots_dir(lib_op_dir, force_create=True):
 
 
 def create_read_to_ins_histogram(
-    lib_inserts_uniq_fp, plot_op_fp, table_op_fp, lib_name
+    lib_inserts_uniq_fp, plot_op_fp, table_op_fp=None, lib_name=None
 ):
     """
     Description:
@@ -93,6 +93,9 @@ def create_read_to_ins_histogram(
             line_num += 1
     FH.close()
 
+    if not table_op_fp or not lib_name:
+        return
+
     write_counts_table(sizes_arr, one_count, table_op_fp)
 
     # Creating plot
@@ -147,8 +150,7 @@ def create_count_dict(counts_list):
 
 def test_libuniq_hst(inp_fp, op_fp):
     logging.basicConfig(level=logging.DEBUG)
-
-    create_lib_inserts_histogram(inp_fp, op_fp)
+    create_read_to_ins_histogram(inp_fp, op_fp, )
 
 
 def main():

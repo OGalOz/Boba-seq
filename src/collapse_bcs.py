@@ -19,6 +19,8 @@ import json
 import statistics
 import matplotlib.pyplot as plt
 
+from src.validate import validate_collapse_params
+
 
 def bc_df_collapse_steps(
     bc_df, cp, dfs_dir, cfg_d, lib_name, print_dbg=False, bc_to_loc_dicts=None
@@ -60,7 +62,7 @@ def bc_df_collapse_steps(
     log_list += new_log
 
     best_mappings_d, failed_bcs, multi_contig_bcs = get_best_mapping_for_barcodes(
-        bc_to_loc_dicts, cp, print_dbg=print_dbg
+        bc_to_loc_dicts, cp, dfs_dir, print_dbg=print_dbg
     )
 
     # best_mapping_d: dict of bc: [Tuple() for each best location]
@@ -254,7 +256,7 @@ def create_bc_to_loc_count_histogram(op_lib_dir, final_bc_df, dfs_dir, cfg_d, li
     return None
 
 
-def get_best_mapping_for_barcodes(bc_to_loc_dicts, cp, print_dbg=False):
+def get_best_mapping_for_barcodes(bc_to_loc_dicts, cp, dfs_dir, print_dbg=False):
     """
     bc_to_loc_dicts is a dictionary mapping barcode to a dictionary which
     # holds tuple of location (start, end, contig) -> number of times that location
@@ -687,7 +689,7 @@ def main_collapse_barcodes(op_lib_dir, lib_name, cfg_d):
             "min_perc_match": int (Minimum percent_match)
     """
 
-    cp = clps_check_cfg(cfg_d)
+    cp = validate_collapse_params(cfg_d)
     dfs_dir = os.path.join(op_lib_dir, cfg_d["d"]["steps2dirs"]["5"])
     bc_fp = os.path.join(dfs_dir, cfg_d["d"]["fns"]["5"]["bc_loc_df"])
     # Note that gene count and locus tags aren't in use
