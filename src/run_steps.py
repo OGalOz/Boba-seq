@@ -156,7 +156,9 @@ def get_help_str():
     help_str = "To run the entire program from the beginning, use:\n"
     help_str += "python3 src/run_steps.py cfg_json inp_dir op_dir(tmp) 1\n"
     help_str += "To start the program at a certain point, use:\n"
-    help_str += "python3 src/run_steps.py cfg_json inp_dir op_dir(tmp) [int=2,3,...]\n"
+    help_str += "python3 src/run_steps.py cfg_json inp_dir op_dir(tmp) [2,3,...](int)\n\n"
+    help_str += "For example, in the Docker container, to test the program run\n"
+    help_str += "python3 src/run_steps.py tests/json/quik_test.json tests/sample_data/small_test test_op 1"
     return help_str
 
 

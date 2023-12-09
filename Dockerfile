@@ -10,7 +10,7 @@ COPY . .
 RUN pip install --upgrade pip
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 
 # Install dependencies required for building vsearch
@@ -68,4 +68,4 @@ RUN chmod +x /usr/local/bin/usearch32
 
 # Run the Python script when the container launches
 # CMD ["python3", "./src/run_steps.py"]
-CMD ["ls", "."]
+ENTRYPOINT [ "/bin/bash" ] 

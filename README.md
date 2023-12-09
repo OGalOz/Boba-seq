@@ -243,6 +243,14 @@ To run the Genome Viewer:
 ## Running Docker
 ```/bin/sh
 docker build -t my-bobaseq .
+```
+Once you've built it, you should be able to see it in Docker Desktop
+```
 # Entering container
-docker run -it --rm --name bobaseq_container my-bobaseq /bin/bash
+docker run -it my-bobaseq
+```
+Now you should be in a shell inside the Docker container
+To run the program, use
+```
+python3 src/run_steps.py tests/json/quik_test.json tests/sample_data/small_test test_op 1
 ```

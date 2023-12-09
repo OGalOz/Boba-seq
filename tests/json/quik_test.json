@@ -23,7 +23,7 @@
     },
     "step_1": {
         "files_pre_split": false,
-        "usearch_exec_path": "/usr/local/bin/usearch",
+        "usearch_exec_path": "/usr/local/bin/usearch32",
         "search_pcr2": {
             "fwd": "GTTCTTATCTTTGCAGTCTC",
             "rev": "GAGATTTACGCTTTGGTAAAAGTTGG",
